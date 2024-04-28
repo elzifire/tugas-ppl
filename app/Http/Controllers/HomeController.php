@@ -13,7 +13,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        // halaman ini hanya bisa di akses jika sudah login dan memiliki role admin 
+        // menggunakan middleware custom
         $this->middleware('auth');
+        $this->middleware('admin');
     }
 
     /**

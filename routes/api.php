@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\QuizAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,12 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/users',  \App\Http\Controllers\Api\UsersController::class);
 
 
-Route::get('/posts', [\App\Http\Controllers\Api\PostContoller::class, 'index']);
+// Route::get('/posts', [\App\Http\Controllers\Api\PostContoller::class, 'index']);
 
+// route buat avatar
 Route::get('/images', [\App\Http\Controllers\Api\ImageController::class, 'index']);
+
+// route buat menampilkan quiz 
+// Route::get('/quiz', [\App\Http\Controllers\Api\QuizController::class, 'index']);
+Route::get('/quizzes', [\App\Http\Controllers\Api\QuizController::class, 'index'])->name('quizzes.index');
+    

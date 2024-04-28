@@ -110,7 +110,13 @@
                             <a href="#">Dashboard</a>
                         </li>
                         <li class="sidebar-item">
-                            {{-- <a href="{{ route('admin.photo.index') }}">Go to Image Index</a> --}}
+                            <a href="{{ route('images.index') }}">Image</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('categories.index') }}">Kategori</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('quizzes.index') }}">Kuis</a>
                         </li>
                     </ul>
                 </div>
