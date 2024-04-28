@@ -22,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
+        'point',
+        'role', 
     ];
 
     /**
@@ -44,10 +47,5 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected function image(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => url('/storage/users/' . $value),
-        );
-    }
+    
 }

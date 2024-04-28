@@ -16,6 +16,38 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style>
+        /* Styling for sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 3.5rem; /* Adjust based on navbar height */
+        }
+
+        .sidebar-item {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .sidebar-item a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .sidebar-item a:hover {
+            color: #007bff;
+        }
+
+        /* Adjust content area to avoid overlap with sidebar */
+        .content {
+            margin-left: 250px; /* Same as sidebar width */
+            padding: 1rem;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -29,11 +61,6 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -73,9 +100,34 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 sidebar">
+                    <ul class="list-unstyled">
+                        <!-- Menu Dashboard Admin -->
+                        <li class="sidebar-item">
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li class="sidebar-item">
+                            {{-- <a href="{{ route('admin.photo.index') }}">Go to Image Index</a> --}}
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Content -->
+                <div class="col-md-9 content">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
     </div>
+
+    {{-- library boostrap 5.3 --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    
+
 </body>
 </html>
