@@ -10,9 +10,13 @@
                     <h4 class="card-title">Edit Kuis</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('quizzes.update', $quiz->id) }}" method="POST">
+                    <form action="{{ route('quizzes.update', $quiz->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+                        <div class="form-group">
+                            <label for="image">FOTO</label>
+                            <input type="file" class="form-control" name="image" value="{{ $quiz->image }}">
+                        </div>
                         <div class="form-group">
                             <label for="category_id">Kategori</label>
                             <select class="form-control" id="category_id" name="category_id">

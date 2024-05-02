@@ -19,6 +19,7 @@ return new class extends Migration
 
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('quiz_categories')->onDelete('cascade');
             $table->string('question');
