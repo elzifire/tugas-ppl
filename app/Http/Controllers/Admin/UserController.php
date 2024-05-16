@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,28 +9,23 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     // Menampilkan semua user
     public function index()
     {
         $users = User::all();
-        return response()->json($users);
+        return view('admin.user.index', compact('users'));
     }
 
     // Menampilkan form pembuatan user
     public function create()
     {
-        // Logika tidak diperlukan dalam API
+        return view('admin.user.create');
     }
 
     // Menyimpan user baru ke dalam database
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $this->validate($request,[
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -39,9 +34,10 @@ class UserController extends Controller
             
         ]);
 
-        //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/users', $image->hashName());
+        
+    //    //upload image
+       $image = $request->file('image');
+       $image->storeAs('public/users', $image->hashName());
 
         User::create([
             'name' => $request->name,
@@ -52,6 +48,8 @@ class UserController extends Controller
             
         ]);
 
-        return response()->json(['message' => 'User created successfully']);
+        dd($request->all());
+        
+        return redirect()->route('user.index')->with('success', 'User created successfully');
     }
 }

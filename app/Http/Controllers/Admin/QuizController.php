@@ -82,7 +82,7 @@ class QuizController extends Controller
         return view('admin.quizzes.edit', compact('quiz', 'categories'));
     }
 
-
+    
 
     // Method untuk menghapus kuis
     public function destroy($id)

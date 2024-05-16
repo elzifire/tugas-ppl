@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('role')->default('pengunjung');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->integer('point')->default('0');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
