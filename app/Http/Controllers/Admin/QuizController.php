@@ -30,11 +30,11 @@ class QuizController extends Controller
         return view('admin.quizzes.create', compact('categories'));
     }
 
-    
+    // Method untuk menyimpan kuis baru
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'image' => 'image',
+        $this->validate($request, [
+            'image' => 'nullable|image',
             'category_id' => 'required',
             'question' => 'required',
             'option_a' => 'required',
@@ -44,11 +44,8 @@ class QuizController extends Controller
             'correct_answer' => 'required'
         ]);
 
-            $image = $request->file('image');
-           $image->storeAs('public/quiz', $image->hashName());
-
-           Quiz::create([
-            'image' => $image->hashName(),
+        // Inisialisasi data kuis
+        $quizData = [
             'category_id' => $request->category_id,
             'question' => $request->question,
             'option_a' => $request->option_a,
@@ -56,24 +53,37 @@ class QuizController extends Controller
             'option_c' => $request->option_c,
             'option_d' => $request->option_d,
             'correct_answer' => $request->correct_answer,
-           ]);
+        ];
 
-           return redirect()->route('quizzes.index')->with(['success' => 'sukses']);
+        // Jika ada file gambar yang diupload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->storeAs('public/quiz', $image->hashName());
+            $quizData['image'] = $image->hashName(); // Tambahkan nama file gambar ke dalam data kuis
+        }
+
+        // Buat kuis baru
+        Quiz::create($quizData);
+
+        // Redirect ke halaman index kuis dengan pesan sukses
+        return redirect()->route('quizzes.index')->with(['success' => 'Kuis berhasil ditambahkan.']);
     }
 
+    // Method untuk menampilkan detail kuis
     public function show($id)
     {
         // Temukan kuis berdasarkan ID
-        $quiz = Quiz::find($id);
+        $quiz = Quiz::findOrFail($id);
 
         // Tampilkan halaman detail kuis
         return view('admin.quizzes.show', compact('quiz'));
     }
 
+    // Method untuk menampilkan form edit kuis
     public function edit($id)
     {
         // Temukan kuis berdasarkan ID
-        $quiz = Quiz::find($id);
+        $quiz = Quiz::findOrFail($id);
 
         // Ambil semua kategori kuis
         $categories = QuizCategory::all();
@@ -81,8 +91,6 @@ class QuizController extends Controller
         // Tampilkan form edit kuis
         return view('admin.quizzes.edit', compact('quiz', 'categories'));
     }
-
-    
 
     // Method untuk menghapus kuis
     public function destroy($id)
@@ -98,8 +106,9 @@ class QuizController extends Controller
         // Hapus kuis
         $quiz->delete();
 
-        // Redirect ke halaman index kuis
+        // Redirect ke halaman index kuis dengan pesan sukses
         return redirect()->route('quizzes.index')
             ->with('success', 'Kuis berhasil dihapus.');
     }
 }
+?>

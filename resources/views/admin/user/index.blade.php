@@ -15,6 +15,7 @@
                     <th>Point</th>
                     <th>Created At</th>
                     <th>Updated At</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                         <td>{{ $user->point }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
+                        <td><a href="{{ route('user.edit', $user->id) }}"></a></td>
                     </tr>
                 @endforeach
             </tbody>
