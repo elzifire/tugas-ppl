@@ -32,3 +32,6 @@ Route::resource('/categories', \App\Http\Controllers\Admin\QuizCategoryControlle
 Route::resource('/quizzes', \App\Http\Controllers\Admin\QuizController::class); 
 
 Route::resource('/user', \App\Http\Controllers\Admin\UserController::class);
+
+// route buat menambahkan barcode
+Route::resource('/barcodes', \App\Http\Controllers\Admin\BarcodeController::class);

@@ -30,44 +30,44 @@ class QuizController extends Controller
         return view('admin.quizzes.create', compact('categories'));
     }
 
-    // Method untuk menyimpan kuis baru
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'image' => 'nullable|image',
-            'category_id' => 'required',
-            'question' => 'required',
-            'option_a' => 'required',
-            'option_b' => 'required',
-            'option_c' => 'required',
-            'option_d' => 'required',
-            'correct_answer' => 'required'
-        ]);
+        // Method untuk menyimpan kuis baru
+        public function store(Request $request)
+        {
+            $this->validate($request, [
+                'image' => 'nullable|image',
+                'category_id' => 'required',
+                'question' => 'required',
+                'option_a' => 'required',
+                'option_b' => 'required',
+                'option_c' => 'required',
+                'option_d' => 'required',
+                'correct_answer' => 'required'
+            ]);
 
-        // Inisialisasi data kuis
-        $quizData = [
-            'category_id' => $request->category_id,
-            'question' => $request->question,
-            'option_a' => $request->option_a,
-            'option_b' => $request->option_b,
-            'option_c' => $request->option_c,
-            'option_d' => $request->option_d,
-            'correct_answer' => $request->correct_answer,
-        ];
+            // Inisialisasi data kuis
+            $quizData = [
+                'category_id' => $request->category_id,
+                'question' => $request->question,
+                'option_a' => $request->option_a,
+                'option_b' => $request->option_b,
+                'option_c' => $request->option_c,
+                'option_d' => $request->option_d,
+                'correct_answer' => $request->correct_answer,
+            ];
 
-        // Jika ada file gambar yang diupload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagePath = $image->storeAs('public/quiz', $image->hashName());
-            $quizData['image'] = $image->hashName(); // Tambahkan nama file gambar ke dalam data kuis
+            // Jika ada file gambar yang diupload
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->storeAs('public/quiz', $image->hashName());
+                $quizData['image'] = $image->hashName(); // Tambahkan nama file gambar ke dalam data kuis
+            }
+
+            // Buat kuis baru
+            Quiz::create($quizData);
+
+            // Redirect ke halaman index kuis dengan pesan sukses
+            return redirect()->route('quizzes.index')->with(['success' => 'Kuis berhasil ditambahkan.']);
         }
-
-        // Buat kuis baru
-        Quiz::create($quizData);
-
-        // Redirect ke halaman index kuis dengan pesan sukses
-        return redirect()->route('quizzes.index')->with(['success' => 'Kuis berhasil ditambahkan.']);
-    }
 
     // Method untuk menampilkan detail kuis
     public function show($id)
