@@ -1,43 +1,88 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Barcode;
-use \Milon\Barcode\Facades\DNS1DFacade as DNS1D;
-use \Milon\Barcode\Facades\DNS2DFacade as DNS2D;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 class BarcodeController extends Controller
 {
+
     public function index()
     {
         $barcodes = Barcode::all();
-        // $barcode = DNS1D::getBarcodeHTML('4445645656', 'EAN13');
-        
-        $barcode = DNS2D::getBarcodeHTML('4445645656', 'QRCODE');
-        return view('admin.barcodes.index', compact('barcodes' , 'barcode'));
+        return view('admin.barcodes.index', compact('barcodes'));
     }
-    
+
     public function create()
     {
-        return view('admin.barcodes.create');
+        $users = User::all();
+        return view('admin.barcodes.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'barcode' => 'required',
-            'point' => 'required',
+            'user_id' => 'required|exists:users,id',
+            'expires_at' => 'required|date'
         ]);
 
-        Barcode::create([
-            'barcode' => $request->barcode,
-            'point' => $request->point,
-            'status' => 'active',
-            'scan_date' => null,
-            'user_id' => null
+        $user = User::find($request->user_id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        $code = config('app.url') . '/' . uniqid(); // Generate unique code for barcode
+        $barcode = Barcode::create([
+            'code' => $code,
+            'user_id' => $user->id,
+            'expires_at' => Carbon::parse($request->expires_at)
         ]);
 
-        return redirect()->route('barcodes.index')->with('success', 'Barcode berhasil ditambahkan');
+        return redirect()->route('admin.barcodes.show', $barcode->id)
+                         ->with('success', 'Barcode generated successfully.');
+    }
+
+    public function show($id)
+    {
+        $barcode = Barcode::findOrFail($id);
+        $qrCode = QrCode::size(300)->generate($barcode->code);
+        return view('admin.barcodes.show', compact('barcode', 'qrCode'));
+    }
+
+    public function showScanPage()
+    {
+        return view('admin.barcodes.scan');
+    }
+
+    public function processScan(Request $request)
+    {
+        $request->validate([
+            'barcode' => 'required|string'
+        ]);
+
+        $barcode = Barcode::where('code', $request->barcode)->first();
+
+        if ($barcode && $barcode->expires_at->isFuture()) {
+            $user = auth()->user();
+            $today = now()->toDateString();
+
+            if ($user->last_scanned_at != $today) {
+                $user->increment('points', 50);
+                $user->last_scanned_at = $today;
+                $user->save();
+
+                return redirect()->route('barcodes.scan')->with('success', 'Points added successfully!');
+            } else {
+                return redirect()->route('barcodes.scan')->with('error', 'You have already scanned today.');
+            }
+        }
+
+        return redirect()->route('barcodes.scan')->with('error', 'Barcode not found or expired.');
     }
 }

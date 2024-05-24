@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Barcode extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+
+    protected $fillable = [
+        'code',
+        'user_id',
+        'expires_at'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

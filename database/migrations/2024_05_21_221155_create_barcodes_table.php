@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('barcodes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('barcode');
-            $table->string('status');
-            $table->date('scan_date');
-            $table->bigInteger('point');
+            $table->string('code');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamp('expires_at');
             $table->timestamps();
         });
     }

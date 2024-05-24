@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\BarcodeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,4 +35,12 @@ Route::resource('/quizzes', \App\Http\Controllers\Admin\QuizController::class);
 Route::resource('/user', \App\Http\Controllers\Admin\UserController::class);
 
 // route buat menambahkan barcode
-Route::resource('/barcodes', \App\Http\Controllers\Admin\BarcodeController::class);
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/barcodes', [BarcodeController::class, 'index'])->name('barcodes.index');
+    Route::get('/barcodes/create', [BarcodeController::class, 'create'])->name('barcodes.create');
+    Route::post('/barcodes', [BarcodeController::class, 'store'])->name('barcodes.store');
+    Route::get('/barcodes/{id}', [BarcodeController::class, 'show'])->name('barcodes.show');
+});
+
+    
+

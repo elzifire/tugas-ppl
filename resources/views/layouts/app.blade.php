@@ -118,6 +118,9 @@
                         <li class="sidebar-item">
                             <a href="{{ route('quizzes.index') }}">Kuis</a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('admin.barcodes.index') }}">Check In</a>
+                        </li>
                     </ul>
                 </div>
 

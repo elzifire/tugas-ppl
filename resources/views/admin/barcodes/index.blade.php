@@ -1,26 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        @foreach ($barcodes as $barcode)
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            {{ $barcode->name }}
-                        </div>
-                        <div class="card-body">
-                            <p>{{ $barcode->barcode }}</p>
-                            <div>{!! DNS2D::getBarcodeHTML($barcode->barcode, 'QRCODE') !!}</div>
-                        </div>
-                        <div class="card-footer">
-                            <h2>{{ $barcode->point }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        @endforeach
-    </div>
-
+<div class="container">
+    <h1>Barcodes List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>User</th>
+                <th>Expires At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($barcodes as $barcode)
+            <tr>
+                <td>{{ $barcode->id }}</td>
+                <td>{{ $barcode->code }}</td>
+                <td>{{ $barcode->user->name }}</td>
+                <td>{{ $barcode->expires_at }}</td>
+                <td><a href="{{ route('admin.barcodes.show', $barcode->id) }}">View</a></td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 @stop

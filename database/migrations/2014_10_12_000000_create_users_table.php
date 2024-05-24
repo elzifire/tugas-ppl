@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('role')->default('pengunjung');
             $table->string('image')->nullable();
             $table->integer('point')->default('0');
+            $table->date('last_scanned_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

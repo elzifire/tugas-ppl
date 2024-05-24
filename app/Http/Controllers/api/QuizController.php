@@ -9,9 +9,6 @@ use App\Models\Quiz;
 
 class QuizController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         // Ambil id kategori dari request
@@ -28,39 +25,36 @@ class QuizController extends Controller
         // Ambil semua kuis dari kategori yang diberikan
         $quizzes = Quiz::where('category_id', $categoryId)->get();
 
+        // Random urutan kuis
+        $shuffledQuizzes = $quizzes->shuffle();
+
+        // Bagi hasil random menjadi grup-grup yang masing-masing berisi 10 kuis
+        $chunkedQuizzes = $shuffledQuizzes->chunk(10);
+
+        // Konversi setiap grup menjadi array
+        $result = $chunkedQuizzes->map(function ($chunk) {
+            return $chunk->values();
+        });
+
         // Kembalikan daftar kuis dalam bentuk respons JSON
-        return response()->json(['quizzes' => $quizzes]);
+        return response()->json(['quizzes' => $result]);
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        // Ambil id kuis dari request
+        $quizId = $request->route('id');
+
+        // Temukan kuis berdasarkan id
+        $quiz = Quiz::find($quizId);
+
+        // Jika kuis tidak ditemukan, kembalikan respon dengan status 404
+        if (!$quiz) {
+            return response()->json(['message' => 'Kuis tidak ditemukan'], 404);
+        }
+
+        // Kembalikan detail kuis dalam bentuk respons JSON
+        return response()->json(['quiz' => $quiz]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

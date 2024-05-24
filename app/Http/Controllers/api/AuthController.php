@@ -25,6 +25,7 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+        $input['point'] = 50;
         $user = User::create($input);
 
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
@@ -32,7 +33,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'User registered successfully.',
+            'message' => 'User registered successfully and get 50 point.',
             'data' => $success
         ]);
     }
