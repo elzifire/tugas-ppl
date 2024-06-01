@@ -17,7 +17,7 @@
                             <label for="name">Nama Kategori</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}" placeholder="Masukkan nama kategori">
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-success mt-2">Simpan Perubahan</button>
                     </form>
                 </div>
             </div>

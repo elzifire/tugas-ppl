@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('barcodes', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('code')->unique();
             $table->timestamp('expires_at');
             $table->timestamps();
         });

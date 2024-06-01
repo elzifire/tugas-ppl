@@ -71,47 +71,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function update(Request $request)
-    {
-        $user = Auth::user();
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|required|string|max:255',
-            'password' => 'sometimes|required|string|min:6',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
-        ]);
-
-
-
-        // $users = User::find($request->id);
-
-        // if ($request->file('image') == ('')) {
-        //     $image = $request->file('image');
-        //     $image->storeAs('public/users', $image->hashName());
-        //     $users->update(['image' => $image->hashName()]);
-        // }
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        if ($request->has('name')) {
-            $user->name = $request->name;
-        }
-
-        
-        if ($request->has('password')) {
-            $user->password = bcrypt($request->password);
-        }
-
-        $user->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User updated successfully.',
-            'data' => $user
-        ]);
-    }
+    
+    
 
     public function addPoints(Request $request)
     {
@@ -151,5 +112,7 @@ class AuthController extends Controller
         ]);
 
     }    
+
+    
 
 }

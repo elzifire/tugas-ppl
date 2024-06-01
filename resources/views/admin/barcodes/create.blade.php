@@ -2,23 +2,24 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Generate Barcode</h1>
-    <form action="{{ route('admin.barcodes.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="user_id">User:</label>
-            <select name="user_id" id="user_id" class="form-control" required>
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-            </select>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-title">
+                <h1 class="text-center">Buat Barcode</h1>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('admin.barcodes.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="expires_at" class="form-label">Expired At</label>
+                        <input type="date" class="form-control" id="expires_at" name="expires_at">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="expires_at">Expiration Date:</label>
-            <input type="date" name="expires_at" id="expires_at" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Generate Barcode</button>
-    </form>
-</div>
+    </div>
+
+
 @endsection

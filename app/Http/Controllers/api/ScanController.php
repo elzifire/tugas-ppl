@@ -5,29 +5,33 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Barcode;
+use App\Models\User;
 use Carbon\Carbon;
 
 class ScanController extends Controller
 {
     public function scanBarcode(Request $request)
     {
+        // Validasi input
         $request->validate([
             'code' => 'required|string'
         ]);
 
-        $barcode = Barcode::where('code', $request->barcode)->first();
+        // Cari barcode berdasarkan kode
+        $barcode = Barcode::where('code', $request->code)->first();
         $pointScan = 50;
 
         if ($barcode) {
-            $user = $request->user();
+            // Ambil user berdasarkan auth
+            $user = User::find($request->user()->id);
             $today = Carbon::now()->toDateString();
 
-            // Check if the user has already scanned today
+            // Periksa apakah user sudah melakukan scan hari ini
             if ($user->last_scanned_at != $today) {
-                $user->update([
-                    'point' => $user->point =+ $pointScan,
-                    'last_scanned_at' => $today
-                ]);
+                // Tambah poin dan update tanggal scan terakhir user
+                $user->point += $pointScan;
+                $user->last_scanned_at = $today;
+                $user->save();
 
                 return response()->json([
                     'status' => 'success',

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Charts\UserChart;
 
 class HomeController extends Controller
 {
@@ -24,8 +26,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    // get data users and grafik
     public function index()
     {
+
         return view('home');
     }
+
 }

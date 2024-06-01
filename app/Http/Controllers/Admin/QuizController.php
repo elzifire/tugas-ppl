@@ -11,13 +11,22 @@ use Illuminate\Support\Facades\Storage;
 class QuizController extends Controller
 {
     // Method untuk menampilkan semua kuis
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua kuis dari database
-        $quizzes = Quiz::all();
+        $category_id = $request->input('category_id');
+        
+        // Ambil semua kategori
+        $categories = QuizCategory::all();
 
-        // Kirim data kuis ke view
-        return view('admin.quizzes.index', compact('quizzes'));
+        // Ambil kuis berdasarkan kategori yang dipilih, jika ada
+        $quizzesQuery = Quiz::query();
+        if ($category_id) {
+            $quizzesQuery->where('category_id', $category_id);
+        }
+        $quizzes = $quizzesQuery->paginate(10);
+
+        // Kirim data kuis dan kategori ke view
+        return view('admin.quizzes.index', compact('quizzes', 'categories', 'category_id'));
     }
 
     // Method untuk menampilkan form tambah kuis
@@ -44,8 +53,12 @@ class QuizController extends Controller
                 'correct_answer' => 'required'
             ]);
 
+            // upload image
+            $image = $request->file('image');
+            $image->storeAs('public/quiz', $image->hashName());
+    
             // Inisialisasi data kuis
-            $quizData = [
+            $quizData = Quiz::create([
                 'category_id' => $request->category_id,
                 'question' => $request->question,
                 'option_a' => $request->option_a,
@@ -53,20 +66,18 @@ class QuizController extends Controller
                 'option_c' => $request->option_c,
                 'option_d' => $request->option_d,
                 'correct_answer' => $request->correct_answer,
-            ];
+                'image' => $image->hashName(),
+            ]);
 
-            // Jika ada file gambar yang diupload
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imagePath = $image->storeAs('public/quiz', $image->hashName());
-                $quizData['image'] = $image->hashName(); // Tambahkan nama file gambar ke dalam data kuis
+            if($quizData){
+                // Redirect ke halaman index kuis dengan pesan sukses
+                return redirect()->route('quizzes.index')
+                    ->with('success', 'Kuis berhasil ditambahkan.');
+            } else {
+                // Redirect ke halaman index kuis dengan pesan error
+                return redirect()->route('quizzes.index')
+                    ->with('error', 'eror');
             }
-
-            // Buat kuis baru
-            Quiz::create($quizData);
-
-            // Redirect ke halaman index kuis dengan pesan sukses
-            return redirect()->route('quizzes.index')->with(['success' => 'Kuis berhasil ditambahkan.']);
         }
 
     // Method untuk menampilkan detail kuis

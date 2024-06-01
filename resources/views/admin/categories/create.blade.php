@@ -16,7 +16,7 @@
                             <label for="name">Nama Kategori</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama kategori">
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-success mt-2">Simpan</button>
                     </form>
                 </div>
             </div>

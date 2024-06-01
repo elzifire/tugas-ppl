@@ -1,0 +1,53 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+ 
+/* Styling for sidebar */
+.sidebar {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    color: #ED7D31;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #f8f9fa;
+    padding-top: 3.5rem; /* Adjust based on navbar height */
+}
+
+.sidebar-item {
+    padding: 1rem;
+}
+
+.sidebar-item a {
+    font-family: "Poppins", sans-serif;
+    color: #B1B1B1;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.sidebar-item a:hover {
+    font-family: "Poppins", sans-serif;
+    color: #ED7D31;
+}
+
+/* Adjust content area to avoid overlap with sidebar */
+.content {
+    font-family: "Poppins", sans-serif;
+    margin-left: 270px; /* Same as sidebar width + additional margin */
+    padding: 1rem; 
+}
+.sidebar-item a.active {
+    color: #ED7D31;
+}
+/* Responsiveness for larger screens */
+@media (min-width: 992px) {
+    .sidebar {
+        width: 250px; /* Sidebar width for larger screens */
+    }
+
+    .content {
+        margin-left: 270px; /* Same as sidebar width + additional margin */
+    }
+}

@@ -1,23 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    <h5 class="card-title">Bank Soal</h5>
+                    <p class="card-text"><span>{{ App\Models\Quiz::count() ?? '0' }}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">USERS</h5>
+                    <p class="card-text"><span>{{ App\Models\User::count() ?? '0' }}</span></p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+   
+        
+
 @endsection
+

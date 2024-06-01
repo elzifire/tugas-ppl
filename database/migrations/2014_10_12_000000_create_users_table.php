@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->integer('point')->default('0');
             $table->date('last_scanned_at')->nullable();
+            $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
