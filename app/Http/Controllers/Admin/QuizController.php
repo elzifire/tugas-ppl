@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Storage;
 
 class QuizController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     // Method untuk menampilkan semua kuis
     public function index(Request $request)
     {
@@ -43,7 +50,7 @@ class QuizController extends Controller
         public function store(Request $request)
         {
             $this->validate($request, [
-                'image' => 'nullable|image',
+                // 'image' => 'nullable|image',
                 'category_id' => 'required',
                 'question' => 'required',
                 'option_a' => 'required',
@@ -54,8 +61,13 @@ class QuizController extends Controller
             ]);
 
             // upload image
-            $image = $request->file('image');
-            $image->storeAs('public/quiz', $image->hashName());
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $image->storeAs('public/quiz', $image->hashName());
+            }
+
+            // $image = $request->file('image');
+            // $image->storeAs('public/quiz', $image->hashName());
     
             // Inisialisasi data kuis
             $quizData = Quiz::create([
@@ -68,6 +80,8 @@ class QuizController extends Controller
                 'correct_answer' => $request->correct_answer,
                 'image' => $image->hashName(),
             ]);
+
+            
 
             if($quizData){
                 // Redirect ke halaman index kuis dengan pesan sukses

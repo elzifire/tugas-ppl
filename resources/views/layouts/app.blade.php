@@ -103,15 +103,15 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ route('admin.barcodes.index') }}">Check In</a>
+                            <a href="{{ route('admin.barcodes.index') }}" class="{{ request()->routeIs('admin.barcodes.index') ? 'active' : '' }}"><i class="fa-solid fa-qrcode"></i>&nbsp; Barcode</a>
                         </li>
-                        {{-- <li class="sidebar-item">
+                        <li class="sidebar-item">
                             <a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.index') ? 'active' : '' }}">
                                 <i class="fa-solid fa-user"></i>&nbsp;User
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="sidebar-item">
-                            <a href="#" class="{{ request()->routeIs('leaderboard.index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.leaderboard') }}" class="{{ request()->routeIs('admin.leaderboard') ? 'active' : '' }}">
                                 <i class="fa-solid fa-ranking-star"></i>&nbsp;LeaderBoard
                             </a>
                         </li>

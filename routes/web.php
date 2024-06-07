@@ -44,6 +44,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/barcodes/create', [BarcodeController::class, 'create'])->name('barcodes.create');
     Route::post('/barcodes', [BarcodeController::class, 'store'])->name('barcodes.store');
     Route::get('/barcodes/{id}', [BarcodeController::class, 'show'])->name('barcodes.show');
+
+    // leaderboard
+    Route::get('/leaderboard', [App\Http\Controllers\Admin\UserController::class, 'leaderboard'])->name('leaderboard');
 });
 
     

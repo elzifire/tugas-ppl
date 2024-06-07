@@ -44,6 +44,7 @@ class ScanController extends Controller
                     'message' => 'Anda sudah melakukan scan hari ini.',
                     'data' => null
                 ]);
+                
             }
         } else {
             return response()->json([

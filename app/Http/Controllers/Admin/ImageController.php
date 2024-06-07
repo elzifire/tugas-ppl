@@ -10,6 +10,13 @@ use Illuminate\View\View;
 
 class ImageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     // menampilkan semua data
     public function index(): View
     {

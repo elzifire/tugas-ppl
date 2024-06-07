@@ -27,14 +27,10 @@
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                     </div>
                     <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" name="role" value="{{ $user->role }}">
-                    </div>
-                    <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
                         <input type="file" class="form-control" id="image" name="image">
                         @if ($user->image)
-                            <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }}" class="mt-2" style="max-width: 200px;">
+                            <img src="{{ $user->image }}" alt="{{ $user->name }}" class="mt-2" style="max-width: 200px;">
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary">Update User</button>

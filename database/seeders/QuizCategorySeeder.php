@@ -14,11 +14,12 @@ class QuizCategorySeeder extends Seeder
     public function run()
     {
         DB::table('quiz_categories')->insert([
-            ['name' => 'Math'],
-            ['name' => 'Science'],
-            ['name' => 'History'],
-            ['name' => 'Geography'],
-            ['name' => 'Literature'],
+            ['name' => 'Senjata'],
+            ['name' => 'Cyber'],
+            ['name' => 'Terorist'],
+            ['name' => 'Sejarah'],
+            ['name' => 'Peristiwa'],
+            ['name' => 'Atribut'],
         ]);
     }
 }

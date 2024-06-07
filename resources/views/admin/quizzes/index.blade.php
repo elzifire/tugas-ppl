@@ -27,6 +27,8 @@
                             <button type="submit" class="btn btn-primary">Filter</button>
                         </div>
                     </form>
+                    {{-- button create data --}}
+                    <a href="{{ route('quizzes.create') }}" class="btn btn-primary mt-2">Tambah Quiz</a>
                 </div>
             </div>
             
@@ -56,6 +58,9 @@
                                 <td>
                                     <form action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" class="d-inline">
                                         <a href="{{ route('quizzes.edit', $quiz->id ) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        {{-- detail --}}
+                                        <a href="{{ route('quizzes.show', $quiz->id ) }}" class="btn btn-sm btn-info">Detail</a>
+                                        {{-- delete --}}
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
