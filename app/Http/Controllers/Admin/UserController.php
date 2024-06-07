@@ -23,10 +23,10 @@ class UserController extends Controller
         return view('admin.user.index', compact('users'));
     }
 
-    // menampilkan leaderboard berdasarkan point tertinggi dan role = admin tidak boleh tampil
+    // Mengambil semua pengguna yang bukan admin dan mengurutkannya berdasarkan poin tertinggi
     public function leaderboard()
     {
-        $users = User::where('role', 'pengunjung')->orderBy('point', 'desc')->get();
+        $users = User::where('role_id', 2)->orderBy('point', 'desc')->get();
         return view('admin.leaderboard.index', compact('users'));
     }
 
@@ -38,13 +38,6 @@ class UserController extends Controller
         return view('admin.user.create');
     }
 
-
-    // Menampilkan form edit user
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        return view('admin.user.edit', compact('user'));
-    }
 
     // Mengupdate data user ke dalam database
     public function update(Request $request, $id)
@@ -95,18 +88,6 @@ class UserController extends Controller
            }
 
     }
-
-    // Menghapus user dari database
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-
-        // Hapus gambar user
-        Storage::delete($user->image);
-
-        $user->delete();
-
-        return redirect()->route('user.index')->with('success', 'User deleted successfully');
-    }
+        
 
 }

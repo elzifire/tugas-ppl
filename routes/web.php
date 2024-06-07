@@ -38,13 +38,14 @@ Route::resource('/quizzes', \App\Http\Controllers\Admin\QuizController::class);
 
 Route::resource('/user', \App\Http\Controllers\Admin\UserController::class);
 
+
 // route buat menambahkan barcode
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/barcodes', [BarcodeController::class, 'index'])->name('barcodes.index');
     Route::get('/barcodes/create', [BarcodeController::class, 'create'])->name('barcodes.create');
     Route::post('/barcodes', [BarcodeController::class, 'store'])->name('barcodes.store');
     Route::get('/barcodes/{id}', [BarcodeController::class, 'show'])->name('barcodes.show');
-
+    
     // leaderboard
     Route::get('/leaderboard', [App\Http\Controllers\Admin\UserController::class, 'leaderboard'])->name('leaderboard');
 });

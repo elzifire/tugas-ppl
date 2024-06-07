@@ -16,9 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && $request->user()->role !== 'admin') {
-            abort(403, 'Unauthorized action.');
-        }
+       // Check if the user is authenticated and their role is not 'admin'
+       if ($request->user() && $request->user()->role->role_name !== 'admin') {
+        abort(403, 'Unauthorized action.');
+    }
 
         return $next($request);
     }
