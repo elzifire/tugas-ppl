@@ -1,73 +1,208 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-
-body {
-    background-color: #DA874F;
+*, ::after,
+::before {
+    box-sizing: border-box;
 }
 
-nav {
-    background-color: #EDDEDA;
+body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    opacity: 1;
+    overflow-y: scroll;
+    margin: 0;
 }
 
-.btn {
-    background-color: #ED7D31;
-    color: #fff;
-    width: 223px;
-    height: 80px;
-    border-radius: 18px;
-    font-size: 23px;
-    font-family: "Poppins", sans-serif;
+a {
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
 }
 
-#hero{
-    background-color: #ED7D31;
+li{
+    list-style: none;
 }
 
-.bg-hero {
-    margin-top: 20px;
+/* h4{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: var(--bs-emphasis-color);
+} */
+
+.wrapper {
+    align-items: stretch;
+    display: flex;
     width: 100%;
-    border-radius: 19px;
 }
 
-#video {
-    background-color: #DA874F;
+#sidebar {
+     max-width: 264px;
+     min-width: 264px;
+     background: var(--bs-dark);
+     transition: all 0.35s ease-in-out;
 }
 
-.foto1{
-    background-color: #fff;
-    width: 484px;
-    height: 314px;
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 0;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    width: 100%;
+    background: var(--bs-dark-bg-subtle);
+}
+
+/* sidebar Elements Style */
+
+.sidebar-logo{
+    padding: 1.15rem;
+
+}
+
+.sidebar-logo a {
+    color: #e9ecef;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.sidebar-nav{
+    flex-grow: 1;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+
+.sidebar-header{
+    color: #e9ecef;
+    font-size: 18px;
+    padding: 1.5rem 1.5rem .375rem;
+}
+
+a.sidebar-link{
+    padding: .625rem 1.625rem;
+    color: #e9ecef;
+    position: relative;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 29px;
-    border-radius: 19px;
+    font-size: 18px;
+
 }
 
-.bg-header {
-    width: 484px;
-    height: 310px;
-    padding: 5px 5px 5px 5px;
-    border-radius: 19px;
+.sidebar-link[data-bs-toggle="collapse"]::after{
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
 }
 
-.muri-logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: "Poppins", sans-serif;
-    color: #fff;
+.sidebar-link[data-bs-toggle="collapse"].collapsed::after{
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
 }
 
-.trailler {
-    padding: 5px 5px 5px 5px;
-    font-family: "Poppins", sans-serif;
-    font-size: 36px;
-    height: 94px;
-    width: 354px;
+
+.avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.navbar-expand .navbar-nav{
+     margin-left: auto;
+}
+
+.dropdown-menu{
+    /* background: #e9ecef; */
+    color: var(--bs-emphasis-color);
+
+}
+
+.content {
+    flex: 1;
+    max-width: 100vw;
+    width: 100vw;
+
+}
+
+@media (min-width:768px) {
+    .content{
+        max-width: auto;
+        width: auto;
+    }
+
     
 }
-.mainkan{
-    font-family: "Poppins", sans-serif;
-    padding: 5px 5px 5px 5px;
+
+.card{
+    box-shadow: 0 0 .875rem 0 rgba(34, 46, 60, .05);
+    margin-bottom: 24px;
+}
+
+.illustration{
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-emphasis-color);
+}
+
+.illustration-img{
+    max-width: 150px;
+    width: 100%;
+}
+/* button close */
+@media (max-width: 767px) {
+    
+}
+
+
+#sidebar.collapsed{
+    margin-left: -264px;
+}
+
+/* footer and nav */
+@media (max-width:767.98px) {
+    .navbar, footer{
+        width: 100vw;
+    }
+    
+}
+
+/* Theme Toggler */
+.theme-toggle{
+    position: fixed;
+    top: 89%;
+    transform: translateY(-65%);
+    text-align: center;
+    z-index: 10;
+    right: 0;
+    left: auto;
+    border: none;
+    background-color: var(--bs-body-color);
+}
+
+html[data-bs-theme="dark"] .theme-toggle .fa-sun,
+html[data-bs-theme="light"] .theme-toggle .fa-moon{
+    cursor: pointer;
+    padding: 10px;
+    display: block;
+    font-size: 1.25rem;
+    color: #fff;
+
+} 
+html[data-bs-theme="dark"] .theme-toggle .fa-moon{
+    display: none;
+}
+
+html[data-bs-theme="light"] .theme-toggle .fa-sun{
+    display: none;
+}
+
+.sidebar-item a.active {
+    color: #ED7D31;
+    background-color: blue;
 }

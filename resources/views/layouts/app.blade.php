@@ -17,114 +17,119 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <div class="wrapper" id="app">
+        <asside id="sidebar">
+            <!-- content for sidebar -->
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <a href="#">Muri</a>
+                </div><!--end logo  -->
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Muri
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }} sidebar-link ">
+                            <i class="fa-solid fa-house"></i>&nbsp;Dashboard
+                        </a>
+                    </li>
+                   
+                    {{-- tolong buatkan sidebar dropdown lalu nanti routenya itu mengarah ke quizzes atau categories  --}}
+                    <li class="sidebar-item">
+                        <a href="{{ route('quizzes.index') }}" class="{{ request()->routeIs('quizzes.*') ? 'active' : '' }} sidebar-link">
+                            <i class="fa-solid fa-clipboard-list"></i>&nbsp;Quizzes
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{{ route('categories.index') }}" class="{{ request()->routeIs('categories.*') ? 'active' : '' }} sidebar-link">
+                            <i class="fa-solid fa-list"></i>&nbsp;Categories
+                        </a>
+                    </li>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent" d-print-none>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                    {{-- sidebar untuk  --}}
+                    <li class="sidebar-item">
+                        <a href="{{ route('admin.barcodes.index') }}" class="{{ request()->routeIs('barcodes.*') ? 'active' : '' }} sidebar-link">
+                            <i class="fa-solid fa-barcode"></i>&nbsp;Barcodes
+                        </a>
+                    </li>
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown d-print-none">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+                    {{-- sidebar untuk users --}}
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                    <li class="sidebar-item">
+                        <a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.*') ? 'active' : '' }} sidebar-link">
+                            <i class="fa-solid fa-user"></i>&nbsp;Users
+                        </a>
+                    </li>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+                    {{-- sidebar untuk leaderboard --}}
+                    <li class="sidebar-item">
+                        <a href="{{ route('admin.leaderboard') }}" class="{{ request()->routeIs('admin.leaderboard.*') ? 'active' : '' }} sidebar-link">
+                            <i class="fa-solid fa-trophy"></i>&nbsp;Leaderboard
+                        </a>
+                    </li>
+                
+                </ul>
             </div>
-        </nav>
+        </asside>
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <button class="btn" id="sidebar-toggle" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="" 
+                            class="avatar">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
 
-        <div class="container-fluid ">
-            <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-3 sidebar d-print-none">
-                    <ul class="list-unstyled">
-                        <!-- Menu Dashboard Admin -->
-                        <li class="sidebar-item">
-                            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                                <i class="fa-solid fa-house"></i>&nbsp;Dashboard
-                            </a>
-                        </li>
-                        {{-- <li class="sidebar-item">
-                            <a href="#"><i class="fa-regular fa-newspaper"></i><span> Berita</span></a>
-                        </li> --}}
-                        {{-- <li class="sidebar-item">
-                            <a href="{{ route('images.index') }}">Image</a>
-                        </li> --}}
-                        <li class="sidebar-item">
-                            <a href="{{ route('categories.index') }}" class="{{ request()->routeIs('categories.index') ? 'active' : '' }}">
-                                <i class="fa-solid fa-tag"></i>&nbsp;Kategori
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('quizzes.index') }}" class="{{ request()->routeIs('quizzes.index') ? 'active' : '' }}">
-                                <i class="fa-solid fa-question"></i>&nbsp;Bank Soal
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('admin.barcodes.index') }}" class="{{ request()->routeIs('admin.barcodes.index') ? 'active' : '' }}"><i class="fa-solid fa-qrcode"></i>&nbsp; Barcode</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.index') ? 'active' : '' }}">
-                                <i class="fa-solid fa-user"></i>&nbsp;User
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('admin.leaderboard') }}" class="{{ request()->routeIs('admin.leaderboard') ? 'active' : '' }}">
-                                <i class="fa-solid fa-ranking-star"></i>&nbsp;LeaderBoard
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Content -->
-                <div class="col-md-9 content">
-                    @yield('content')
-                </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                        </div>
+                    </li>
+                </ul>
             </div>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    @yield('content')                    
+                </div>
+            </main>
+            <a href="#" class="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+                <i class="fa-regular fa-sun"></i>
+            </a>
+            <footer class="footer fixed-bottom">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-muted">
+                            &copy; 2024 Muri. All rights reserved.
+                        </div>
+                        <div class="d-flex">
+                            <a href="#" class="text-muted">Privacy Policy</a>
+                            <a href="#" class="text-muted ms-3">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
+
     </div>
+
 
     {{-- library boostrap 5.3 --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -141,6 +146,9 @@
 
     {{-- chart js  --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    {{-- script main js in folder public  --}}
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 </body>
 
 </html>
