@@ -32,20 +32,18 @@ class UserTableSeeder extends Seeder
             'status_id' => $activeStatus->id,
         ]);
 
-        User::create([
-            'name' => 'User 1',
-            'email' => 'user1@example.com',
-            'password' => bcrypt('password'),
-            'role_id' => $userRole->id,
-            'status_id' => $activeStatus->id,
-        ]);
-
-        User::create([
-            'name' => 'User 2',
-            'email' => 'user2@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => $userRole->id,
-            'status_id' => $inactiveStatus->id,
-        ]);
+        // tolong buatkan user baru sebanyak 20 buah dengan role user dan status active menggunakan looping        
+        for ($i = 1; $i <= 20; $i++) {
+            User::create([
+                'name' => 'User ' . $i,
+                'email' => 'user' . $i . '@example.com',
+                'password' => bcrypt('password'),
+                'role_id' => $userRole->id,
+                'point' => $i * 100,
+                'status_id' => $activeStatus->id,
+            ]);
+        }
+        
+        
     }
 }

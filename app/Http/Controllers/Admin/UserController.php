@@ -19,14 +19,34 @@ class UserController extends Controller
     // Menampilkan semua user
     public function index()
     {
-        $users = User::all();
+        
+        //buatkan fitur search user berdasarkan nama atau email 
+        if (request()->q != '') {
+            $users = User::where('name', 'LIKE', '%' . request()->q . '%')
+                ->orWhere('email', 'LIKE', '%' . request()->q . '%')
+                ->paginate(10);
+        }else  {
+            $users = User::latest()->paginate(10);
+        }
+        
+       
         return view('admin.user.index', compact('users'));
-    }
+    }   
 
     // Mengambil semua pengguna yang bukan admin dan mengurutkannya berdasarkan poin tertinggi
     public function leaderboard()
     {
-        $users = User::where('role_id', 2)->orderBy('point', 'desc')->get();
+        //fitur seacrh
+        if (request()->q != '') {
+            $users = User::where('role_id', 2)
+                ->where('name', 'LIKE', '%' . request()->q . '%')
+                ->orWhere('email', 'LIKE', '%' . request()->q . '%')
+                ->orderBy('point', 'desc')
+                ->paginate(10);
+        }else  {
+            $users = User::where('role_id', 2)->orderBy('point', 'desc')->paginate(10);
+        } 
+
         return view('admin.leaderboard.index', compact('users'));
     }
 

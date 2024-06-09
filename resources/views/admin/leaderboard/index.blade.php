@@ -5,7 +5,16 @@
 
 {{-- menampilkan leaderboard dengan card boostrap 5  --}}
 <div class="card">
-    <div class="card-header"><h5>Leaderboard</h5></div>
+    <div class="card-header">
+        <h3>Leaderboard</h3>
+           {{-- fitur search dengan name=q --}}
+        <form action="{{ route('admin.leaderboard') }}" method="GET">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search..." name="q">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
     <div class="card-body">
         <table class="table table-bordered">
             <thead>
@@ -28,6 +37,13 @@
                     </tr>
                 @endforelse
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        {{ $users->links() }}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
    

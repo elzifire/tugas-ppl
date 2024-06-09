@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('quiz_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('overview')->nullable();
+            $table->string('intro')->nullable();
             $table->timestamps();
         });
 

@@ -48,6 +48,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     // leaderboard
     Route::get('/leaderboard', [App\Http\Controllers\Admin\UserController::class, 'leaderboard'])->name('leaderboard');
+
+    // reward
+    Route::resource('/rewards', \App\Http\Controllers\Admin\RewardController::class);
+
 });
 
     

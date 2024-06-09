@@ -20,8 +20,16 @@ class RewardController extends Controller
 
     public function redeemPoint(Request $request)
     {
+        // saya ingin yang bisa redeem point hanya user dengan role_id = 2  (user biasa)
+        if ($request->user()->role_id != 2) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Anda tidak bisa redeem point',
+                'data' => null
+            ]);
+        }
         $reward = Reward::find($request->id);
-        $user = User::find($request->user()->id);
+        $user = User::find($request->user()->id && $request->user()->role_id == 2);
         
 
         if ($user->point >= $reward->point) {

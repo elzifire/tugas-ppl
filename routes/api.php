@@ -36,3 +36,6 @@ Route::post('/scan-barcode', [\App\Http\Controllers\Api\ScanController::class, '
 
 // route buat redeem point
 Route::post('/redeem-point', [\App\Http\Controllers\Api\RewardController::class, 'redeemPoint'])->name('redeem-point')->middleware('auth:sanctum');
+
+// route buat leaderboard
+Route::get('/leaderboard', [\App\Http\Controllers\Api\LeaderboardController::class, 'index'])->name('leaderboard')->middleware('auth:sanctum');
