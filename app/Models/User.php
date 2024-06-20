@@ -58,6 +58,10 @@ class User extends Authenticatable
         return $this->belongsTo(Status::class);
     }
 
+    public function redeemRewards()
+    {
+        return $this->hasMany(RedeemReward::class);
+    }
 
     protected function image(): Attribute
     {

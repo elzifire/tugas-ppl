@@ -40,6 +40,15 @@ class QuizController extends Controller
         return response()->json(['quizzes' => $result]);
     }
 
+    public function categoryQuiz()
+    {
+        // Ambil semua kategori kuis
+        $categories = QuizCategory::all();
+
+        // Kembalikan daftar kategori kuis dalam bentuk respons JSON
+        return response()->json(['categories' => $categories]);
+    }
+
     public function show(Request $request)
     {
         // Ambil id kuis dari request

@@ -20,6 +20,19 @@ return new class extends Migration
             $table->integer('stock');
             $table->timestamps();
         });
+
+        // tabel riwayat redeem reward
+        Schema::create('redeem_rewards', function (Blueprint $table){
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('reward_id');
+            $table->integer('point');
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('reward_id')->references('id')->on('rewards')->onDelete('cascade');
+        });
+        
     }
 
     /**
@@ -27,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('redeem_rewards');
         Schema::dropIfExists('rewards');
     }
 };

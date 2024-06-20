@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -26,6 +26,8 @@ class AuthController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $input['point'] = 50;
+        $input['role_id'] = 2; // 2 adalah role 'user'
+        $input['status_id'] = 1; // 1 adalah status 'active'
         $user = User::create($input);
 
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
@@ -45,9 +47,8 @@ class AuthController extends Controller
             $success['token'] = $auth->createToken('auth_token')->plainTextToken;            
             $success['name'] = $auth->name;
             $success['email'] = $auth->email;
-
+            
             return response()->json([
-                'success' => true,
                 'message' => 'Login sukses',
                 'data' => $success
             ]);
@@ -56,22 +57,61 @@ class AuthController extends Controller
                 'success' => false,
                 'message' => 'Cek email dan password lagi',
                 'data' => null
-            ]);
+            ], 401);
         }
     }
 
     public function userDetails(Request $request)
     {
+        // get user yang sedang login lalu itu peringkat user berdasarkan point yang dimiliki
         $user = Auth::user();
+        $users = User::where('role_id', 2)->orderBy('point', 'desc')->get();
+        $rank = 1;
+        foreach ($users as $key => $user) {
+            if ($user->id == auth()->user()->id) {
+                break;
+            }
+            $rank++;
+        }
+
+        $result = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'point' => $user->point,
+            'rank' => $rank,
+            'image' => $user->image,
+        ]; 
 
         return response()->json([
             'success' => true,
-            'message' => 'Detail user berhasil diambil',
-            'data' => $user
+            'message' => 'User details',
+            'data' => $result,
         ]);
+       
     }
 
     
+    // update user by id with upload image
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $path = $image->store('public/images');
+            $user->image = $path;
+        }
+
+        $user->name = $request->name;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User berhasil diupdate',
+            'data' => $user
+        ]);
+    }
     
 
     public function addPoints(Request $request)

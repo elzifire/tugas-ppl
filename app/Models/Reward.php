@@ -12,6 +12,11 @@ class Reward extends Model
 
     protected $guarded = [];
 
+    public function redeemRewards()
+    {
+        return $this->hasMany(RedeemReward::class);
+    }
+
     public function image(): Attribute
     {
         return Attribute::make(

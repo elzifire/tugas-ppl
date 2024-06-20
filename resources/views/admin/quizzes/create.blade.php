@@ -17,13 +17,15 @@
 <div class="card">
     <div class="card-header"><h5>Buat Kuis</h5></div>
     <div class="card-body">
-        <form method="POST" action="{{ route('quizzes.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('quizzes.store') }}" enctype="multipart/form-data" id="uploadForm"> 
             @csrf
 
+           
             <div class="mb-3">
-                <label for="image" class="form-label">FOTO (Optional):</label>
-                <input type="file" name="image" id="image" class="form-control" accept="image/jpeg,image/png,image/jpg,image/gif">
+                <label for="image" class="form-label">Gambar:</label>
+                <input type="file" name="image" id="image" class="form-control">
             </div>
+
 
             <div class="mb-3">
                 <label for="category_id" class="form-label">Kategori:</label>
@@ -79,5 +81,13 @@
     </div>
 </div>
 
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        const imageInput = document.getElementById('image');
+        if (!imageInput.files.length) {
+            imageInput.value = null;
+        }
+    });
+</script>
 
 @endsection

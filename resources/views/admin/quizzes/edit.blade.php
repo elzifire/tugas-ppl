@@ -10,12 +10,12 @@
                     <h4 class="card-title">Edit Kuis</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('quizzes.update', $quiz->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('quizzes.update', $quiz->id) }}" method="POST" enctype="multipart/form-data" id="uploadForm">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
                             <label for="image">FOTO</label>
-                            <input type="file" class="form-control" name="image" value="{{ $quiz->image }}">
+                            <input type="file" class="form-control" name="image" >
                         </div>
                         <div class="form-group">
                             <label for="category_id">Kategori</label>
@@ -60,4 +60,14 @@
             </div>
         </div>
     </div>
+
+    
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        const imageInput = document.getElementById('image');
+        if (!imageInput.files.length) {
+            imageInput.value = null;
+        }
+    });
+</script>
 @endsection

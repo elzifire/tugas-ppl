@@ -49,8 +49,8 @@ class QuizController extends Controller
         // Method untuk menyimpan kuis baru
         public function store(Request $request)
         {
+            // Validasi data kuis
             $this->validate($request, [
-                // 'image' => 'nullable|image',
                 'category_id' => 'required',
                 'question' => 'required',
                 'option_a' => 'required',
@@ -59,39 +59,30 @@ class QuizController extends Controller
                 'option_d' => 'required',
                 'correct_answer' => 'required'
             ]);
-
+    
             // upload image
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $image->storeAs('public/quiz', $image->hashName());
             }
-
-            // $image = $request->file('image');
-            // $image->storeAs('public/quiz', $image->hashName());
     
             // Inisialisasi data kuis
-            $quizData = Quiz::create([
-                'category_id' => $request->category_id,
-                'question' => $request->question,
-                'option_a' => $request->option_a,
-                'option_b' => $request->option_b,
-                'option_c' => $request->option_c,
-                'option_d' => $request->option_d,
-                'correct_answer' => $request->correct_answer,
-                'image' => $image->hashName(),
-            ]);
-
-            
-
-            if($quizData){
-                // Redirect ke halaman index kuis dengan pesan sukses
-                return redirect()->route('quizzes.index')
-                    ->with('success', 'Kuis berhasil ditambahkan.');
-            } else {
-                // Redirect ke halaman index kuis dengan pesan error
-                return redirect()->route('quizzes.index')
-                    ->with('error', 'eror');
+            $quiz = new Quiz;
+            $quiz->category_id = $request->category_id;
+            $quiz->question = $request->question;
+            $quiz->option_a = $request->option_a;
+            $quiz->option_b = $request->option_b;
+            $quiz->option_c = $request->option_c;
+            $quiz->option_d = $request->option_d;
+            $quiz->correct_answer = $request->correct_answer;
+            if ($request->hasFile('image')) {
+                $quiz->image = $image->hashName();
             }
+            $quiz->save();
+    
+            // Redirect ke halaman index kuis dengan pesan sukses
+            return redirect()->route('quizzes.index')
+                ->with('success', 'Kuis berhasil ditambahkan.');
         }
 
     // Method untuk menampilkan detail kuis
@@ -115,6 +106,46 @@ class QuizController extends Controller
 
         // Tampilkan form edit kuis
         return view('admin.quizzes.edit', compact('quiz', 'categories'));
+    }
+
+    // buatkan method buat update kuis
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'category_id' => 'required',
+            'question' => 'required',
+            'option_a' => 'required',
+            'option_b' => 'required',
+            'option_c' => 'required',
+            'option_d' => 'required',
+            'correct_answer' => 'required'
+        ]);
+
+        // Temukan kuis berdasarkan ID
+        $quiz = Quiz::findOrFail($id);
+
+        // upload image
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image->storeAs('public/quiz', $image->hashName());
+        }
+
+        // Inisialisasi data kuis
+        $quiz->category_id = $request->category_id;
+        $quiz->question = $request->question;
+        $quiz->option_a = $request->option_a;
+        $quiz->option_b = $request->option_b;
+        $quiz->option_c = $request->option_c;
+        $quiz->option_d = $request->option_d;
+        $quiz->correct_answer = $request->correct_answer;
+        if ($request->hasFile('image')) {
+            $quiz->image = $image->hashName();
+        }
+        $quiz->save();
+
+        // Redirect ke halaman index kuis dengan pesan sukses
+        return redirect()->route('quizzes.index')
+            ->with('success', 'Kuis berhasil diupdate.');
     }
 
     // Method untuk menghapus kuis

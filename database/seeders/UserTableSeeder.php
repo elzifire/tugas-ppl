@@ -33,16 +33,16 @@ class UserTableSeeder extends Seeder
         ]);
 
         // tolong buatkan user baru sebanyak 20 buah dengan role user dan status active menggunakan looping        
-        for ($i = 1; $i <= 20; $i++) {
-            User::create([
-                'name' => 'User ' . $i,
-                'email' => 'user' . $i . '@example.com',
-                'password' => bcrypt('password'),
-                'role_id' => $userRole->id,
-                'point' => $i * 100,
-                'status_id' => $activeStatus->id,
-            ]);
-        }
+        // for ($i = 1; $i <= 20; $i++) {
+        //     User::create([
+        //         'name' => 'User ' . $i,
+        //         'email' => 'user' . $i . '@example.com',
+        //         'password' => bcrypt('password'),
+        //         'role_id' => $userRole->id,
+        //         'point' => $i * 100,
+        //         'status_id' => $activeStatus->id,
+        //     ]);
+        // }
         
         
     }

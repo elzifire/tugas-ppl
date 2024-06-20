@@ -41,9 +41,9 @@ class ScanController extends Controller
             } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Anda sudah melakukan scan hari ini.',
+                    'message' => 'Anda sudah melakukan scan hari ini. Silahkan coba lagi besok.',
                     'data' => null
-                ]);
+                ], 406);
                 
             }
         } else {
@@ -51,7 +51,7 @@ class ScanController extends Controller
                 'status' => 'error',
                 'message' => 'Barcode tidak ditemukan',
                 'data' => null
-            ]);
+            ], 404);
         }
     }
 }

@@ -204,5 +204,5 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun{
 
 .sidebar-item a.active {
     color: #ED7D31;
-    background-color: blue;
+    background-color: #fdfff5;
 }
