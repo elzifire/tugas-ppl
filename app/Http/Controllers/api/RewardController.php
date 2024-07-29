@@ -100,12 +100,34 @@ class RewardController extends Controller
         }
     }
 
-    public function redeemHistory(Request $request)
+    public function history(Request $request)
     {
-        $redeem = $request->user()->redeemRewards;
-        return response()->json([
-            'status' => 'success',
-            'data' => $redeem
-        ]);
+        $redeemRewards = RedeemReward::where('user_id', $request->user()->id)
+                                     ->with('user')
+                                     ->get();
+
+        $data = $redeemRewards->map(function ($redeemReward) {
+            return [
+                'id' => $redeemReward->id,
+                'user_name' => $redeemReward->user->name, 
+                'reward_id' => $redeemReward->reward->name, 
+                'point' => $redeemReward->point,
+                'created_at' => $redeemReward->created_at,
+                'updated_at' => $redeemReward->updated_at,
+            ];
+        });
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Riwayat redeem reward tidak ditemukan',
+                'data' => null
+            ], 404);
+        }else{
+            return response()->json([
+                'status' => 'success',
+                'data' => $data
+            ], 200);
+        }
     }
 }

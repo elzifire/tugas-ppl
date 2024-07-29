@@ -63,6 +63,12 @@ class User extends Authenticatable
         return $this->hasMany(RedeemReward::class);
     }
 
+    public function quizAccesses()
+    {
+        return $this->hasMany(QuizAccess::class);
+    }
+
+
     protected function image(): Attribute
     {
         return Attribute::make(

@@ -6,7 +6,7 @@
         {{-- implementasikan fitur search  --}}
         <form action="{{ route('user.index') }}" method="GET">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search..." name="q">
+                <input type="text" class="form-control" placeholder="Cari bedasarkan email" name="q">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
         </form>
@@ -20,7 +20,7 @@
                     <th>Points</th>
                     <th>Last Scanned At</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,7 +34,8 @@
                         <td>{{ $user->last_scanned_at }}</td>
                         <td>{{ $user->status ? $user->status->status_name : 'No Status' }}</td>
                         <td class="text-center">
-
+                            {{-- updateStatus --}}
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-danger">BAN</a>
                         </td>
                     </tr>
                 @endforeach

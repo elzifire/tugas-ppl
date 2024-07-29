@@ -32,6 +32,22 @@ class UserTableSeeder extends Seeder
             'status_id' => $activeStatus->id,
         ]);
 
+        User::create([
+            'name'      => 'user',
+            'email'     => 'beta@gmail.com',
+            'password'  => bcrypt('password'),
+            'role_id' => $userRole->id,
+            'status_id' => $activeStatus->id,
+        ]);
+
+        User::create([
+            'name'      => 'user 2',
+            'email'     => 'beta1@gmail.com',
+            'password'  => bcrypt('password'),
+            'role_id' => $userRole->id,
+            'status_id' => $activeStatus->id,
+        ]);
+
         // tolong buatkan user baru sebanyak 20 buah dengan role user dan status active menggunakan looping        
         // for ($i = 1; $i <= 20; $i++) {
         //     User::create([

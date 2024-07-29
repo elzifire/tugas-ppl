@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Status;
+use App\Models\Role;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -58,56 +61,36 @@ class UserController extends Controller
         return view('admin.user.create');
     }
 
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        $statuses = Status::all();
+        $roles = Role::all();
+        return view('admin.user.edit', compact('user', 'statuses', 'roles'));
+    }
 
-    // Mengupdate data user ke dalam database
     public function update(Request $request, $id)
     {
-        // validate form
-        $this->validate($request,[
-            'name' => 'required',
-            'email' => 'required|email',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        // get user by id
         $user = User::findOrFail($id);
 
-        // check if image uploaded
-        if ($request->hasFile('image')) {
-            // upload new image
-            $image = $request->file('image');
-            $image->storeAs('public/users', $image->hashName());
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'status_id' => 'nullable|exists:statuses,id',
+        ]);
 
-            // delete old image
-            Storage::delete($user->image);
-
-            // update user with new image
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'image' => $image->hashName(),
-            ]);
-           
-        } else {
-            // update user without image
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
-        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-            //return redict with message
-           if ($user) {
-            
-            return redirect()->route('user.index')->with('success', 'User updated successfully');
-           }else{
-            return redirect()->route('user.index')->with('danger', 'User failed to update');
-           }
+        // Mengupdate data user 
+        $user->status_id = $request->input('status_id');
+        $user->save();
 
+        if ($user) {
+            return redirect()->route('user.index')->with('success', 'User berhasil diupdate');
+        } else {
+            return redirect()->route('user.index')->with('error', 'User gagal diupdate');
+        }
     }
-        
 
 }

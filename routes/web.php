@@ -36,8 +36,8 @@ Route::resource('/categories', \App\Http\Controllers\Admin\QuizCategoryControlle
 //quiz
 Route::resource('/quizzes', \App\Http\Controllers\Admin\QuizController::class); 
 
+// user
 Route::resource('/user', \App\Http\Controllers\Admin\UserController::class);
-
 
 // route buat menambahkan barcode
 Route::prefix('admin')->name('admin.')->group(function () {

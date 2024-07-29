@@ -51,12 +51,14 @@
                                 @foreach ($quizzes as $quiz)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        @if($quiz->image !== '-')
-                                            <td><img src="{{ $quiz->image }}" alt="{{ $quiz->question }}" class="img-fluid" style="max-width: 100px;"></td>
+                                        {{-- @if($quiz->image !== '-')
+                                            <td><img src="{{ asset('/images/'.$quiz->image) }}" alt="{{ $quiz->image }}" class="img-fluid" style="max-width: 100px;"></td>
                                         @else
                                             <td>-</td>
-                                        @endif
-
+                                        @endif --}}
+                                        <td>
+                                            <img src="{{ asset('images/'.$quiz->image) }}" alt="">
+                                        </td>
                                         <td>{{ $quiz->category->name }}</td>
                                         <td>{{ $quiz->question }}</td>
                                         <td>

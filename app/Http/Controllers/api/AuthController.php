@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $input['point'] = 50;
+        $input['point'] = 25;
         $input['role_id'] = 2; // 2 adalah role 'user'
         $input['status_id'] = 1; // 1 adalah status 'active'
         $user = User::create($input);
@@ -35,7 +35,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'User registered successfully and get 50 point.',
+            'message' => 'User registered successfully and get 25 point.',
             'data' => $success
         ]);
     }

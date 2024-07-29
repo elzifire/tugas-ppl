@@ -15,9 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserTableSeeder::class);
         $this->call(QuizCategorySeeder::class);
-        // $this->call(QuizSeeder::class);
+        $this->call(QuizSeeder::class);
         // $this->call(BarcodeSeeder::class);
-        // Create some barcodes
-      
+        $this->call(FindSeeder::class);
     }
 }

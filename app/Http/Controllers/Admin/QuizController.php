@@ -60,12 +60,10 @@ class QuizController extends Controller
                 'correct_answer' => 'required'
             ]);
     
-            // upload image
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $image->storeAs('public/quiz', $image->hashName());
-            }
-    
+            // upload image 
+           $imageName = time().'.'.$request->image->extension();
+           $request->image->move(public_path('images'), $imageName);
+            
             // Inisialisasi data kuis
             $quiz = new Quiz;
             $quiz->category_id = $request->category_id;
@@ -75,9 +73,7 @@ class QuizController extends Controller
             $quiz->option_c = $request->option_c;
             $quiz->option_d = $request->option_d;
             $quiz->correct_answer = $request->correct_answer;
-            if ($request->hasFile('image')) {
-                $quiz->image = $image->hashName();
-            }
+                    
             $quiz->save();
     
             // Redirect ke halaman index kuis dengan pesan sukses
