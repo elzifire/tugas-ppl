@@ -7,8 +7,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h1>Reward List</h1>
-                <a href="{{ route('admin.rewards.create') }}" class="btn btn-primary">Add Reward</a>
+                <h1>List Reward</h1>
+                <a href="{{ route('admin.rewards.create') }}" class="btn btn-primary">Tambah Hadiah</a>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">

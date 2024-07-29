@@ -12,7 +12,7 @@
                  @csrf
                  @method('PUT')
                  <div class="mb-3">
-                      <label for="name" class="form-label">Name</label>
+                      <label for="name" class="form-label">Nama</label>
                       <input type="text" class="form-control" id="name" name="name" value="{{ $reward->name }}">
                  </div>
                  <div class="mb-3">
@@ -24,11 +24,11 @@
                       <input type="number" class="form-control" id="stock" name="stock" value="{{ $reward->stock }}">
                  </div>
                  <div class="mb-3">
-                      <label for="description" class="form-label">Description</label>
+                      <label for="description" class="form-label">Deskripsi</label>
                       <textarea class="form-control" id="description" name="description" rows="3">{{ $reward->description }}</textarea>
                  </div>
                  <div class="mb-3">
-                      <label for="image" class="form-label">Image</label>
+                      <label for="image" class="form-label">Foto</label>
                         <img src="{{ $reward->image }}" alt="" style="width: 100px;">
                         <input type="file" class="form-control" id="image" name="image">
                  </div>

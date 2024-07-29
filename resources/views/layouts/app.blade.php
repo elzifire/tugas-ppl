@@ -48,19 +48,19 @@
                     {{-- tolong buatkan sidebar dropdown lalu nanti routenya itu mengarah ke quizzes atau categories  --}}
                     <li class="sidebar-item">
                         <a href="{{ route('quizzes.index') }}" class="{{ request()->routeIs('quizzes.*') ? 'active' : '' }} sidebar-link">
-                            <i class="fa-solid fa-clipboard-list"></i>&nbsp;Quizzes
+                            <i class="fa-solid fa-clipboard-list"></i>&nbsp;Kuis
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a href="{{ route('categories.index') }}" class="{{ request()->routeIs('categories.*') ? 'active' : '' }} sidebar-link">
-                            <i class="fa-solid fa-list"></i>&nbsp;Categories
+                            <i class="fa-solid fa-list"></i>&nbsp;Kategori
                         </a>
                     </li>
 
                     {{-- sidebar untuk  --}}
                     <li class="sidebar-item">
                         <a href="{{ route('admin.barcodes.index') }}" class="{{ request()->routeIs('barcodes.*') ? 'active' : '' }} sidebar-link">
-                            <i class="fa-solid fa-barcode"></i>&nbsp;Barcodes
+                            <i class="fa-solid fa-barcode"></i>&nbsp;QR Code
                         </a>
                     </li>
 
@@ -68,21 +68,21 @@
 
                     <li class="sidebar-item">
                         <a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.*') ? 'active' : '' }} sidebar-link">
-                            <i class="fa-solid fa-user"></i>&nbsp;Users
+                            <i class="fa-solid fa-user"></i>&nbsp;Pengguna
                         </a>
                     </li>
 
                     {{-- sidebar untuk leaderboard --}}
                     <li class="sidebar-item">
                         <a href="{{ route('admin.leaderboard') }}" class="{{ request()->routeIs('admin.leaderboard.*') ? 'active' : '' }} sidebar-link">
-                            <i class="fa-solid fa-trophy"></i>&nbsp;Leaderboard
+                            <i class="fa-solid fa-trophy"></i>&nbsp;Peringkat
                         </a>
                     </li>
 
                     {{-- sidebar untuk reward --}}
                     <li class="sidebar-item">
                         <a href="{{ route('admin.rewards.index') }}" class="{{ request()->routeIs('admin.rewards.*') ? 'active' : '' }} sidebar-link">
-                            <i class="fa-solid fa-gift"></i>&nbsp;Rewards
+                            <i class="fa-solid fa-gift"></i>&nbsp;Hadiah
                         </a>
                     </li>
                 
