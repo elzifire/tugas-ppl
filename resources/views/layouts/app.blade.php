@@ -29,7 +29,7 @@
 
 <body>
     <div class="wrapper" id="xapp">
-        <asside id="sidebar">
+        <asside id="sidebar" class="d-print-none">
             <!-- content for sidebar -->
             <div class="h-100">
                 <div class="sidebar-logo">
@@ -90,7 +90,7 @@
             </div>
         </asside>
         <div class="main">
-            <nav class="navbar navbar-expand px-3 border-bottom">
+            <nav class="navbar navbar-expand px-3 border-bottom d-print-none">
                 <button class="btn" id="sidebar-toggle" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -126,7 +126,7 @@
                 <i class="fa-solid fa-moon"></i>
                 <i class="fa-regular fa-sun"></i>
             </a>
-            <footer class="footer fixed-bottom">
+            <footer class="footer fixed-bottom d-print-none">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="text-muted">

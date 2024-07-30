@@ -27,7 +27,7 @@
                           <a href="{{ route('admin.barcodes.index') }}" class="btn btn-primary d-print-none">Kembali</a>
                         </td>
                         <td colspan="2" class="text-end">
-                          <button onclick="print()" class="btn btn-danger text-end">Print Pdf</button>
+                          <button onclick="print()" class="btn btn-danger text-end d-print-none">Print Pdf</button>
                         </td>
                       </tr>
                     </tfoot>
