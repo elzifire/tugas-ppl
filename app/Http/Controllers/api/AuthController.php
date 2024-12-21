@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
@@ -133,10 +134,19 @@ class AuthController extends Controller
 
         // $user->point += $request->points;
         // $user->save();
-        DB::transaction(function () {
+        DB::beginTransaction();
+        try {
             $user->point += $request->points;
             $user->save();
-        });
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
 
         return response()->json([
             'success' => true,
