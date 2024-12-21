@@ -42,6 +42,11 @@ class AuthController extends Controller
     
     public function login(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $auth = Auth::User();
             $success['token'] = $auth->createToken('auth_token')->plainTextToken;            
@@ -126,8 +131,12 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $user->point += $request->points;
-        $user->save();
+        // $user->point += $request->points;
+        // $user->save();
+        DB::transaction(function () {
+            $user->point += $request->points;
+            $user->save();
+        });
 
         return response()->json([
             'success' => true,
